@@ -8,9 +8,14 @@
         | { type: "text"; value: string }
         | { type: string; value: string };
 
-    const emojiPattern = /<genericdiscordemoji:(?<emojiId>\d+):>/g;
-    const userMentionPattern = /<@(?<userMentionId>\d+)>/g;
-    const channelMentionPattern = /<#(?<channelMentionId>\d+)>/g;
+    const emojiPattern = /<genericdiscordemoji:(?<emojiId>\d+):>/;
+    const userMentionPattern = /<@(?<userMentionId>\d+)>/;
+    const channelMentionPattern = /<#(?<channelMentionId>\d+)>/;
+    const urlPattern =
+        /^(?<url>https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))$/;
+    const headingPattern = /^(?<heading>#\s+.*)$/;
+    // const urlPattern =
+    //     /^(?<url>(?<protocol>https?):\/\/(?:(?<subdomain>www)\.)?(?<domain>[-a-zA-Z0-9@:%._\+~#=]{1,256})\.(?<tld>[a-zA-Z0-9()]{1,6})\b(?<path>[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))$/;
 
     const {
         content,
@@ -57,7 +62,13 @@
         ...parse(
             content,
             new RegExp(
-                [emojiPattern, userMentionPattern, channelMentionPattern]
+                [
+                    headingPattern,
+                    urlPattern,
+                    emojiPattern,
+                    userMentionPattern,
+                    channelMentionPattern,
+                ]
                     .map((p) => p.source)
                     .join("|"),
                 "g",
@@ -88,6 +99,18 @@
             <DiscordChannelMention
                 mention={context?.discordMentions?.channels[part.value]}
             />
+        {:else if part.type === "url"}
+            <a
+                class="text-blue-500 font-extralight hover:underline"
+                rel="noreferrer noopener"
+                title={part.value}
+                href={part.value}
+                target="_blank">{part.value}</a
+            >
+        {:else if part.type === "heading"}
+            <h1 class="text-4xl font-bold leading-tight">
+                {part.value.replace(/^#\s+/, "")}
+            </h1>
         {:else}
             <!--  -->
         {/if}

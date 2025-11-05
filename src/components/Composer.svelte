@@ -41,7 +41,7 @@
 <form
     class="bg-stone-900 w-full h-fit border border-stone-800 -outline-offset-4"
     class:outline={dragover}
-    class:outline-emerald-500={dragover}
+    class:outline-orange-500={dragover}
     {ondragenter}
     {ondragover}
     {ondragleave}
@@ -88,7 +88,7 @@
             type="text"
             placeholder="Message #{room.name}"
             name="text-content"
-            class="text-sm w-full border-none p-3 z-1 grow transition-all duration-200 ease-in-out border border-stone-800 outline outline-transparent focus:outline-emerald-500 -outline-offset-[5px] focus-ring-violet"
+            class="text-sm w-full border-none p-3 z-1 grow transition-all duration-200 ease-in-out border border-stone-800 outline outline-transparent focus:outline-orange-500 -outline-offset-[5px] focus-ring-violet"
         />
         <button
             type="submit"

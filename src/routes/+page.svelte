@@ -32,7 +32,7 @@
     };
 
     onMount(() => {
-        const ws = new WebSocket("ws://localhost:4002/ws");
+        const ws = new WebSocket("ws://localhost:4003/ws");
         // const ws = new WebSocket("wss://mkchat.net");
         window.ws = ws;
 
@@ -43,7 +43,7 @@
                 JSON.stringify({
                     type: "join",
                     data: {
-                        username: "Nick",
+                        username: "Nickk",
                         room: "main",
                     },
                 }),
@@ -101,8 +101,9 @@
             }
         };
 
-        ws.onclose = () => {
+        ws.onclose = (event) => {
             logger.error("Websocket Connection Closed");
+            console.debug(event);
         };
     });
 

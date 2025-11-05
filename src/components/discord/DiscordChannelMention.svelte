@@ -10,7 +10,7 @@
 </script>
 
 <span
-    class="px-1 bg-emerald-500/10 transition-colors hover:bg-emerald-500/25 rounded-sm text-emerald-500 inline"
+    class="px-1 bg-orange-500/10 transition-colors hover:bg-orange-500/25 rounded-sm text-orange-500 inline"
 >
     <ConditionalLink
         condition={"guildId" in mention && "id" in mention}
