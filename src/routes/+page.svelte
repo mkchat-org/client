@@ -62,6 +62,7 @@
                 case "message":
                     const userId = btoa(data.author);
                     const userRole = fetchUserRole(data.badge);
+                    console.log(data.context);
                     room.messages.push({
                         author: {
                             id: userId,
@@ -81,15 +82,16 @@
                         },
                         date: data.date,
                         referenceId: "0",
+                        context: data.context || {},
                     });
                     break;
                 case "updateusers":
-                    room.users = data.users.map(({ username }) => {
+                    room.users = data.users.map(({ username, color }) => {
                         const userId = btoa(username);
                         return {
                             id: userId,
                             alias: username,
-                            color: "",
+                            color: color,
                             avatarURL: null,
                         };
                     });
@@ -142,7 +144,17 @@
         const doc = parser.parseFromString(text, "text/html");
         const body = doc.body;
 
-        console.log(body);
+        for (const emojiEl of body.querySelectorAll<HTMLImageElement>(
+            "img.discordEmoji",
+        )) {
+            if (!emojiEl.src) continue;
+            const emojiId = emojiEl.src.split("/").pop()!.split(".")[0];
+            emojiEl.replaceWith(emojiEl, `<genericdiscordemoji:${emojiId}:>`);
+        }
+
+        console.log(
+            body.querySelectorAll<HTMLImageElement>("img.discordEmoji"),
+        );
 
         return {
             text: body.textContent,

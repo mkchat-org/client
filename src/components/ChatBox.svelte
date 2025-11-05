@@ -9,6 +9,7 @@
             author={message.author}
             content={message.content}
             date={message.date}
+            context={message.context}
         />
     {/each}
 </div>

@@ -30,11 +30,34 @@ export interface ChatMessageContent {
     stickers?: Sticker[];
 };
 
+export type ChatMessageDiscordMentionUser = {
+    id: string;
+    username: string;
+    displayName: string;
+};
+
+export type ChatMessageDiscordMentionChannel = {
+    id?: string;
+    type: number;
+    name: string;
+    guildId?: string;
+};
+
+export interface ChatMessageDiscordMentions {
+    users?: Record<string, ChatMessageDiscordMentionUser>;
+    channels?: Record<string, ChatMessageDiscordMentionChannel>;
+};
+
+export interface ChatMessageContext {
+    discordMentions?: ChatMessageDiscordMentions;
+};
+
 export interface ChatMessage {
     author: User;
     content: ChatMessageContent;
     date: string; // TODO: switch to unix timestamp
-    referenceId: string;
+    referenceId?: string;
+    context?: ChatMessageContext;
 };
 
 export interface RoomData {

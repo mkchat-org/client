@@ -5,8 +5,9 @@
     import Avatar from "./Avatar.svelte";
     import Trash from "phosphor-svelte/lib/Trash";
     import { marked } from "marked";
+    import RichText from "./RichText.svelte";
 
-    const { author, content, date }: ChatMessage = $props();
+    const { author, content, date, context }: ChatMessage = $props();
     const timeStr = new Date(date).toLocaleTimeString("en-US", {
         hour: "numeric",
         minute: "2-digit",
@@ -65,7 +66,10 @@
             {/if}
             <span class="text-xs text-stone-400">{timeStr}</span>
         </div>
-        <span class="break-all">{@html marked(removeHtml(content.text))}</span>
+        <span class="break-all">
+            <RichText content={content.text} {context} />
+        </span>
+        <!-- <span class="break-all">{@html marked(removeHtml(content.text))}</span> -->
         {#if content.attachments && content.attachments.length}
             <div
                 class="max-h-60 p-1 gap-1 flex flex-row overflow-y-hidden overflow-x-auto"
