@@ -5,6 +5,7 @@
     import Sidebar from "../components/Sidebar.svelte";
     import {
         room,
+        UserRole,
         type ChatMessage,
         type ChatMessageContent,
     } from "$lib/state.svelte";
@@ -31,8 +32,8 @@
     };
 
     onMount(() => {
-        // const ws = new WebSocket("ws://localhost:3000");
-        const ws = new WebSocket("wss://mkchat.net");
+        const ws = new WebSocket("ws://localhost:4002/ws");
+        // const ws = new WebSocket("wss://mkchat.net");
         window.ws = ws;
 
         ws.onopen = () => {
@@ -42,7 +43,7 @@
                 JSON.stringify({
                     type: "join",
                     data: {
-                        username: "Nickk",
+                        username: "Nick",
                         room: "main",
                     },
                 }),
@@ -60,18 +61,26 @@
                     break;
                 case "message":
                     const userId = btoa(data.author);
+                    const userRole = fetchUserRole(data.badge);
                     room.messages.push({
                         author: {
                             id: userId,
-                            alias: data.author,
-                            color: data.color.replace("#", ""),
-                            avatarURL: data.avatar,
+                            alias: data.author || "Unknown User",
+                            color: data.color
+                                ? data.color.replace("#", "")
+                                : "",
+                            avatarURL:
+                                userRole === UserRole.DiscordUser
+                                    ? data.avatar
+                                    : null,
+                            role: userRole,
                         },
                         content: {
                             ...parseMessageText(data.text),
                             stickers: data.sticker ? [data.sticker] : [],
                         },
                         date: data.date,
+                        referenceId: "0",
                     });
                     break;
                 case "updateusers":
@@ -101,13 +110,19 @@
         event.preventDefault();
 
         const formData = new FormData(event.target as HTMLFormElement);
-        const content = formData.get("message-content");
+        const textContent = formData.get("text-content");
+        const attachments = formData.get("attachments");
+
+        console.log(attachments);
+        // for (const file of attachments) {
+        //     console.debug("Composer File", file);
+        // }
 
         composerContent = "";
         window.ws.send(
             JSON.stringify({
                 type: "message",
-                text: content,
+                text: textContent,
             }),
         );
     };
@@ -127,6 +142,8 @@
         const doc = parser.parseFromString(text, "text/html");
         const body = doc.body;
 
+        console.log(body);
+
         return {
             text: body.textContent,
             attachments: Array.from(
@@ -138,6 +155,14 @@
                 };
             }),
         };
+    };
+
+    const fetchUserRole = (badgeData: string): UserRole => {
+        const parsedStr = parseMessageText(badgeData).text.toLowerCase().trim();
+
+        if (parsedStr === "discord user") return UserRole.DiscordUser;
+        if (parsedStr === "system") return UserRole.System;
+        return UserRole.Guest;
     };
 </script>
 

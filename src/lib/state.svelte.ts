@@ -1,8 +1,17 @@
+export enum UserRole {
+    System = -1,
+    Guest = 0,
+    AccountHolder,
+    DiscordUser,
+    DiscordModerator,
+};
+
 export interface User {
     id: string;
     alias: string;
     color: string;
     avatarURL?: string;
+    role?: UserRole;
 };
 
 export interface Attachment {
@@ -25,6 +34,7 @@ export interface ChatMessage {
     author: User;
     content: ChatMessageContent;
     date: string; // TODO: switch to unix timestamp
+    referenceId: string;
 };
 
 export interface RoomData {

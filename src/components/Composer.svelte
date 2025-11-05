@@ -7,9 +7,48 @@
     import Smiley from "phosphor-svelte/lib/Smiley";
 
     let { onsubmit, content = $bindable("") } = $props();
+
+    let root: HTMLFormElement;
+    let attachmentInput: HTMLInputElement;
+
+    let dragover = $state(false);
+
+    const ondragenter = (event: DragEvent) => {
+        if (!dragover) dragover = true;
+    };
+    const ondragover = (event: DragEvent) => event.preventDefault();
+    const ondragleave = (event: DragEvent) => {
+        if (
+            event.relatedTarget === null ||
+            !root.contains(event.relatedTarget as Node)
+        ) {
+            dragover = false;
+            console.log("Drag left parent area");
+        }
+    };
+    const ondrop = (event: DragEvent) => {
+        event.preventDefault();
+        event.stopPropagation();
+        dragover = false;
+    };
+
+    const onCommandClick = (event: MouseEvent) => {};
+    const onAttachClick = (event: MouseEvent) => attachmentInput.click();
+    const onGifClick = (event: MouseEvent) => {};
+    const onEmojiClick = (event: MouseEvent) => {};
 </script>
 
-<div class="bg-stone-900 w-full h-fit border border-stone-800">
+<form
+    class="bg-stone-900 w-full h-fit border border-stone-800 -outline-offset-4"
+    class:outline={dragover}
+    class:outline-emerald-500={dragover}
+    {ondragenter}
+    {ondragover}
+    {ondragleave}
+    {ondrop}
+    {onsubmit}
+    bind:this={root}
+>
     <div class="flex flex-row border-b border-stone-800 text-lg">
         <button
             type="button"
@@ -18,10 +57,10 @@
             <Command />
         </button>
         <button
+            onclick={onAttachClick}
             type="button"
             class="border-r border-stone-800 p-2 hover:bg-stone-800 cursor-pointer"
-        >
-            <Folder weight="fill" />
+            ><Folder weight="fill" />
         </button>
         <button
             type="button"
@@ -36,12 +75,19 @@
             <Smiley weight="fill" />
         </button>
     </div>
-    <form class="flex flex-row" {onsubmit}>
+    <div class="flex flex-row">
+        <input
+            type="file"
+            class="hidden"
+            name="attachments"
+            bind:this={attachmentInput}
+            multiple
+        />
         <input
             bind:value={content}
             type="text"
             placeholder="Message #{room.name}"
-            name="message-content"
+            name="text-content"
             class="text-sm w-full border-none p-3 z-1 grow transition-all duration-200 ease-in-out border border-stone-800 outline outline-transparent focus:outline-emerald-500 -outline-offset-[5px] focus-ring-violet"
         />
         <button
@@ -50,6 +96,6 @@
         >
             <PaperPlaneRight weight="fill" />
         </button>
-    </form>
-</div>
+    </div>
+</form>
 <!-- #5ab290 -->
