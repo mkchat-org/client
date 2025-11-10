@@ -3,9 +3,11 @@
     import { UserRole, type ChatMessage } from "$lib/state.svelte";
     import DicebearAvatar from "./DicebearAvatar.svelte";
     import Avatar from "./Avatar.svelte";
-    import Trash from "phosphor-svelte/lib/Trash";
-    import { marked } from "marked";
+    // import Trash from "phosphor-svelte/lib/Trash";
+    // import { marked } from "marked";
     import RichText from "./RichText.svelte";
+    import ImageSprawl from "./ImageSprawl.svelte";
+    import AttachmentImage from "./AttachmentImage.svelte";
 
     const { author, content, date, context }: ChatMessage = $props();
     const timeStr = new Date(date).toLocaleTimeString("en-US", {
@@ -71,6 +73,15 @@
         </span>
         <!-- <span class="break-all">{@html marked(removeHtml(content.text))}</span> -->
         {#if content.attachments && content.attachments.length}
+            <!-- <ImageSprawl>
+                {#each content.attachments as attachment}
+                    <img
+                        class="h-full rounded-sm max-h-60"
+                        src={attachment.url}
+                        alt={attachment.name}
+                    />
+                {/each}</ImageSprawl
+            > -->
             <div
                 class="max-h-60 p-1 gap-1 flex flex-row overflow-y-hidden overflow-x-auto"
             >
