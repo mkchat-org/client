@@ -179,8 +179,14 @@
     };
 </script>
 
-<div class="bg-stone-950 w-screen h-screen text-stone-100 flex p-3 gap-3">
-    <Sidebar />
+<div
+    class="bg-stone-950 w-screen overflow-hidden h-screen text-stone-100 flex p-3 gap-3"
+>
+    <div
+        class="absolute lg:relative flex lg:p-0 pl-2 pt-12 lg:w-min w-full h-full overflow-hidden"
+    >
+        <Sidebar />
+    </div>
     <div class="flex flex-col grow gap-3">
         <Multiplexer />
         <Composer onsubmit={onComposerSubmit} bind:content={composerContent} />

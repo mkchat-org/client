@@ -95,3 +95,5 @@ export const room: RoomData = $state({
     users: [],
     messages: []
 });
+
+// export const sideBarHidden: Boolean = $state(false);
