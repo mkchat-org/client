@@ -1,5 +1,6 @@
 <script lang="ts">
     import "@fontsource/geist";
+    import "@fontsource/ibm-plex-sans";
     import Composer from "../components/Composer.svelte";
     import Multiplexer from "../components/Multiplexer.svelte";
     import Sidebar from "../components/Sidebar.svelte";
@@ -32,7 +33,7 @@
     };
 
     onMount(() => {
-        const ws = new WebSocket("ws://localhost:4003/ws");
+        const ws = new WebSocket("ws://localhost:8000/ws");
         // const ws = new WebSocket("wss://mkchat.net");
         window.ws = ws;
 

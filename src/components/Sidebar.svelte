@@ -9,8 +9,9 @@
     <div class="w-80 opacity-0 text-transparent bg-transparent h-0">
         __spacekeeper
     </div>
-    <div class="px-3 h-10 flex items-center w-full">
+    <div class="px-3 h-10 flex items-center w-full justify-between">
         <span>#{room.name}</span>
+        <span>{room.users.length} users</span>
     </div>
     <div class="flex flex-col w-full overflow-auto">
         {#each room.users as user}

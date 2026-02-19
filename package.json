@@ -16,10 +16,10 @@
         "@sveltejs/kit": "^2.43.2",
         "@sveltejs/vite-plugin-svelte": "^6.2.0",
         "@tailwindcss/vite": "^4.1.13",
-        "svelte": "^5.39.5",
-        "svelte-check": "^4.3.2",
-        "tailwindcss": "^4.1.13",
-        "typescript": "^5.9.2",
+        "svelte": "^5.51.3",
+        "svelte-check": "^4.4.0",
+        "tailwindcss": "^4.1.18",
+        "typescript": "^5.9.3",
         "vite": "npm:rolldown-vite@^7.1.20"
     },
     "overrides": {
@@ -27,8 +27,9 @@
     },
     "dependencies": {
         "@fontsource/geist": "^5.2.8",
-        "@lottiefiles/dotlottie-svelte": "^0.8.6",
-        "marked": "^16.4.1",
-        "phosphor-svelte": "^3.0.1"
+        "@fontsource/ibm-plex-sans": "^5.2.8",
+        "@lottiefiles/dotlottie-svelte": "^0.9.1",
+        "marked": "^17.0.3",
+        "phosphor-svelte": "^3.1.0"
     }
 }

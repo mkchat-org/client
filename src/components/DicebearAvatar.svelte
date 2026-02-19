@@ -6,7 +6,7 @@
         "https://via.mkchat.org/external/dicebear-avatars/lorelei/png",
     );
     url.searchParams.set("seed", seed);
-    url.searchParams.set("size", size.toString());
+    url.searchParams.set("size", "64"); // size.toString()
     url.searchParams.set("hairColor", hairColor);
 </script>
 

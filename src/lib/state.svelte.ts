@@ -4,7 +4,7 @@ export enum UserRole {
     AccountHolder,
     DiscordUser,
     DiscordModerator,
-};
+}
 
 export interface User {
     id: string;
@@ -12,12 +12,12 @@ export interface User {
     color: string;
     avatarURL?: string;
     role?: UserRole;
-};
+}
 
 export interface Attachment {
     name: string;
     url: string;
-};
+}
 
 export interface Sticker {
     type: number;
@@ -28,7 +28,7 @@ export interface ChatMessageContent {
     text: string;
     attachments?: Attachment[];
     stickers?: Sticker[];
-};
+}
 
 export type ChatMessageDiscordMentionUser = {
     id: string;
@@ -46,11 +46,11 @@ export type ChatMessageDiscordMentionChannel = {
 export interface ChatMessageDiscordMentions {
     users?: Record<string, ChatMessageDiscordMentionUser>;
     channels?: Record<string, ChatMessageDiscordMentionChannel>;
-};
+}
 
 export interface ChatMessageContext {
     discordMentions?: ChatMessageDiscordMentions;
-};
+}
 
 export interface ChatMessage {
     author: User;
@@ -58,42 +58,42 @@ export interface ChatMessage {
     date: string; // TODO: switch to unix timestamp
     referenceId?: string;
     context?: ChatMessageContext;
-};
+}
 
 export interface RoomData {
     name: string;
     users: User[];
     messages: ChatMessage[];
-};
+}
 
 export const chatMessages: ChatMessage[] = $state([]);
 
 export const room: RoomData = $state({
     name: "main",
-    // users: [
-    //     {
-    //         alias: "Nick",
-    //         id: "random",
-    //         color: "f09ff7"
-    //     },
-    //     {
-    //         alias: "TheBobster",
-    //         id: "random",
-    //         color: "5ab290"
-    //     },
-    //     {
-    //         alias: "Noob",
-    //         id: "random",
-    //         color: "74d0ec"
-    //     },
-    //     {
-    //         alias: "Pelicant",
-    //         id: "random",
-    //         color: "e1be50"
-    //     }
-    // ],
-    users: [],
-    messages: []
+    users: [
+        {
+            alias: "Nick",
+            id: "random",
+            color: "f09ff7",
+        },
+        {
+            alias: "TheBobster",
+            id: "random",
+            color: "5ab290",
+        },
+        {
+            alias: "Noob",
+            id: "random",
+            color: "74d0ec",
+        },
+        {
+            alias: "Pelicant",
+            id: "random",
+            color: "e1be50",
+        },
+    ],
+    // users: [],
+    messages: [],
 });
 
 // export const sideBarHidden: Boolean = $state(false);
