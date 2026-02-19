@@ -10,7 +10,7 @@
     import AttachmentImage from "./AttachmentImage.svelte";
 
     const { author, content, date, context }: ChatMessage = $props();
-    const timeStr = new Date(date).toLocaleTimeString("en-US", {
+    const timeStr = new Date((() => date)()).toLocaleTimeString("en-US", {
         hour: "numeric",
         minute: "2-digit",
     });

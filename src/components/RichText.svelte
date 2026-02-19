@@ -25,7 +25,7 @@
         context?: ChatMessageContext;
     } = $props();
 
-    console.log(content, "conte", context);
+    console.log((() => content)(), "conte", (() => context)());
 
     function* parse(text: string, pattern: RegExp): Generator<MessagePart> {
         const prevEnd = pattern.lastIndex;
